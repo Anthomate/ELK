@@ -1,10 +1,15 @@
 # Partie 1 : Analyse du modèle relationnel
 
 ### Explorer la structure de la base de données Northwind
+
 * Voir diagram
+
 ## Analyser les relations entre les tables
+
 * Voir diagram
+
 ## Analyser les cas d'usage typiques pour la recherche
+
 * Pour les produits :
 	* products.product_name
 	* products.category_id
@@ -25,6 +30,7 @@
 	* order_details.discount
 	
 ## Définir les objectifs pour l'index Elasticsearch
+
 * Index "products" :
 	* product_id & product_name
 	* unit_price
@@ -40,6 +46,7 @@
 # Partie 2 : Conception du mapping Elasticsearch
 	
 ## Déterminer quelles tables doivent être dénormalisées
+
 * Pour l'index "products" :
 	* Les informations de "products"
 	* Les informations de "categories"
@@ -50,8 +57,11 @@
 	* Les informations de "customers "
 	* Les informations de "order_details"
 	* Les informations de "products" → les noms de produits et catégories dans les lignes de commande
+	
 ## Concevoir la structure des documents
+
 * Structure du document products :
+
 		```json
 		{
 		  "product_id": 1,
@@ -78,7 +88,9 @@
 		  }
 		}
 		```
+		
 * Structure du document orders :
+
 		```json
 		{
 		  "order_id": 10248,
@@ -127,7 +139,9 @@
 		  ]
 		}
 		```
+		
 ## Définir les types de données pour chaque champ
+
 * Types de données :
 	* Pour les identifiants numériques : integer
 	* Pour les noms et textes à rechercher : text avec un champ supplémentaire keyword pour le tri et l'agrégation
@@ -136,6 +150,7 @@
 	* Pour les dates : date
 		
 ## Configurer les analyseurs appropriés
+
 		```json
 		"analysis": {
 		  "analyzer": {
@@ -151,7 +166,9 @@
 		}
 		```
 ## Créer le mapping dans Elasticsearch
-* Mapping pour l'index products :
+
+Mapping pour l'index products :
+
 		```json
 		PUT /products
 		{
@@ -217,7 +234,9 @@
 		  }
 		}
 		```
-* Mapping pour l'index orders :
+		
+Mapping pour l'index orders :
+
 		```json
 		PUT /orders
 		{
